@@ -3,6 +3,8 @@ package com.example.rqchallenge.employees;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.rqchallenge.exception.ClientException;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -11,22 +13,22 @@ import java.util.Map;
 public interface IEmployeeController {
 
     @GetMapping()
-    ResponseEntity<List<Employee>> getAllEmployees() throws IOException;
+    ResponseEntity<List<Employee>> getAllEmployees() throws IOException, ClientException;
 
     @GetMapping("/search/{searchString}")
-    ResponseEntity<List<Employee>> getEmployeesByNameSearch(@PathVariable String searchString);
+    ResponseEntity<List<Employee>> getEmployeesByNameSearch(@PathVariable String searchString) throws ClientException;
 
     @GetMapping("/{id}")
-    ResponseEntity<Employee> getEmployeeById(@PathVariable String id);
+    ResponseEntity<Employee> getEmployeeById(@PathVariable String id) throws ClientException;
 
     @GetMapping("/highestSalary")
-    ResponseEntity<Integer> getHighestSalaryOfEmployees();
+    ResponseEntity<Integer> getHighestSalaryOfEmployees() throws ClientException;
 
     @GetMapping("/topTenHighestEarningEmployeeNames")
-    ResponseEntity<List<String>> getTopTenHighestEarningEmployeeNames();
+    ResponseEntity<List<String>> getTopTenHighestEarningEmployeeNames() throws ClientException;
 
     @PostMapping()
-    ResponseEntity<Employee> createEmployee(@RequestBody Map<String, Object> employeeInput);
+    ResponseEntity<?> createEmployee(@RequestBody Map<String, Object> employeeInput);
 
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteEmployeeById(@PathVariable String id);
